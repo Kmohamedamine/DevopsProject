@@ -2,7 +2,7 @@ version: "3"
 services:
   mysqldb:
     image: mysql
-    container_name: mysql_prod
+    container_name: mysql
     command: mysqld --default-authentication-plugin=mysql_native_password
     volumes:
       - mysql-data:/var/local/mysql/data
@@ -10,15 +10,15 @@ services:
       - "3306:3306"
     hostname: mysql
     environment:
-      - MYSQL_ROOT_PASSWORD=root
-      - MYSQL_DATABASE=achatdb
+      - MYSQL_ROOT_PASSWORD=asijee
+      - MYSQL_DATABASE=examv2thouraya
     volumes:
       - db:/var/lib/mysql
 
   app_maven:
     depends_on:
       - mysqldb
-    image: maminizer/repo:latest
+    image: dismantle/repo:40
     container_name: achat
     restart: on-failure
     ports:
@@ -32,13 +32,6 @@ services:
         }'
     volumes:
       - .m2:/root/.m2 
-  spring_app:
-    image: anas1412/achatfront:latest
-    container_name: achatangular
-    restart: on-failure
-    ports:
-     - 4200:80
-    depends_on:
-     - app_maven
+
 volumes:
   db:
